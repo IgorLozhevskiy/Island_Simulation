@@ -1,6 +1,7 @@
 package Animals;
 
 public class AnimalCharacteristics {
+
     private final String emoji;
     private final String name;
     private final double maxWeight;

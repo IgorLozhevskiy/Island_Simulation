@@ -7,7 +7,6 @@ import java.util.Map;
 public class AnimalsConfig { //Как завещал Кришна и Рама и Смехопанорама вместо Сериализации долбить всё в одном классе
     // Are You welcome in India
     private Map<AnimalType, AnimalCharacteristics> specifications = new HashMap<>();
-
     private int[][] probabilityOfEating = new int[AnimalType.values().length][AnimalType.values().length];
 
     public void initialize() {

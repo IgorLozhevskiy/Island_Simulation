@@ -5,7 +5,6 @@ public class Island {
     public int yDimension;
     public IslandCell[][] islandGrid;
 
-
     public Island(int xDimension, int yDimension) {
         this.xDimension = xDimension;
         this.yDimension = yDimension;

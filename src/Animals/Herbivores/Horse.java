@@ -1,5 +1,4 @@
 package Animals.Herbivores;
-
 import Animals.AnimalCharacteristics;
 
 public class Horse extends Herbivores{

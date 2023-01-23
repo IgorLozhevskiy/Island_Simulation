@@ -1,6 +1,7 @@
 package Animals;
 
 public enum AnimalType {
+
     WOLF,
     SNAKE,
     FOX,

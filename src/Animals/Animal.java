@@ -11,7 +11,6 @@ import java.util.UUID;
 public abstract class Animal {
     private static final int MOVE_DISTANCE = 3;
 
-
     private UUID id;
 
     private final Island island;

@@ -1,9 +1,7 @@
 package Animals;
-
 import Animals.Herbivores.Herbivores;
 import Animals.Herbivores.Horse;
 import Animals.Predators.Wolf;
-
 import java.util.Map;
 
 public class AnimalsFactory {

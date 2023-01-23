@@ -1,8 +1,6 @@
 package Island;
-
 import Animals.Animal;
 import Animals.AnimalType;
-
 import java.util.*;
 
 public class IslandCell {
