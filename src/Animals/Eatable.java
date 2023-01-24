@@ -1,6 +1,6 @@
 package Animals;
 
 public interface Eatable {
-    private void eat() {
+    private void eat(int amountOfFood) {
     }
 }

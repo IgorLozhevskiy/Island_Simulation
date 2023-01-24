@@ -27,6 +27,6 @@ public class Island {
 
     @Override
     public String toString() {
-        return String.format("Total plants in Island.Island: %s \n", getPlantsLevel());
+        return String.format("Total plants in Island: %s \n", getPlantsLevel());
     }
 }

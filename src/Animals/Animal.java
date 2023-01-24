@@ -8,13 +8,13 @@ import Simulation.AppRunner;
 import java.util.Random;
 import java.util.UUID;
 
-public abstract class Animal {
+public abstract class Animal implements Eatable  {
     private static final int MOVE_DISTANCE = 3;
 
     private UUID id;
 
     private final Island island;
-    IslandCell position;
+    public IslandCell position;
 
     public Animal(Island island, AnimalCharacteristics animalCharacteristics) {
         this.id = UUID.randomUUID();
@@ -65,27 +65,6 @@ public abstract class Animal {
     }
 
 
-    public void eat() {
-//        1. достучаться до коллекции абстрактной клетки, в которой есть список растений (объекта растения)
-//        2. проверить есть ли в списке хотя бы один объект растения
-//        3. если есть хотя бы один такой объект, то вызвать метод removePlant() и удалить из списка 1 объект растения
-//        это будет считаться, что животное поело и отразить в логе, что объект растения удалён из списка
-//        boolean empty = true;
-//        for (Plant plant : position.plantsList) {
-//            if (plant != null) {
-//                empty = false;
-//                break;
-//            }
-//        }
-//        Island.IslandCell newIslandCell = island.islandGrid[newX][newY];
-//        this.position = newIslandCell;
-//        this.position.removePlant(plant);
-    }
-
-    public void die() {
-    }
-
-
     private void changePosition(Direction direction) {
         System.out.println("Animals.Animal changes position...");
         int newX = -1;
@@ -123,6 +102,7 @@ public abstract class Animal {
         this.position = position;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -138,4 +118,5 @@ public abstract class Animal {
         return id.hashCode();
     }
 
+    public abstract void eat();
 }

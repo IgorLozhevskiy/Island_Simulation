@@ -18,4 +18,27 @@ public class AnimalCharacteristics {
         this.amountOfFood = amountOfFood;
     }
 
+    public String getEmoji() {
+        return emoji;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getMaxWeight() {
+        return maxWeight;
+    }
+
+    public int getMaxNumInCell() {
+        return maxNumInCell;
+    }
+
+    public int getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    public double getAmountOfFood() {
+        return amountOfFood;
+    }
 }

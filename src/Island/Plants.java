@@ -10,7 +10,4 @@ public class Plants {
         this.plantsLevel = plantsLevel;
     }
 
-
-
-
 }

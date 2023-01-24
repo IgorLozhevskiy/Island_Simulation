@@ -4,12 +4,11 @@ import Animals.Animal;
 import Animals.AnimalCharacteristics;
 import Animals.AnimalType;
 import Animals.AnimalsFactory;
+import Animals.Herbivores.Herbivores;
 import Island.Island;
 import Island.IslandCell;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class AppRunner {
@@ -21,8 +20,8 @@ public class AppRunner {
 
     private static int MAX_PLANTS_IN_CELL = 200;
 
-    private static List<Animal> allAnimals = new ArrayList<>();
-
+        private static List<Animal> allAnimals = new ArrayList<>();
+//    private static Map<AnimalType, Set<Animal>> allAnimals = new HashMap<>();
     Island island = new Island(5, 3);
 
     public void runSimulation() {
@@ -43,10 +42,12 @@ public class AppRunner {
     }
 
     private static void startDay() {
-        allAnimals.forEach(Animal::move);
-        // еда
-        // рост травы, фактор х1.5 growthRestorationOfPlants()
-        // смерть
+        allAnimals.forEach(Animal::move); // 1
+        herbivoresNutrition(); //2 травоядные поели траву
+        //3 хищники поели травоядных
+        //4 рост травы, фактор х1.5 growthRestorationOfPlants()
+        // 5 чем закончится симуляция? Симуляция заканчивается логированием, в котором будет написано на каком ходу все хищники съели всех травоядных
+        // счётчик дней рандомным числом до 15 дней? И посмотреть в какой срок останутся на острове только хищники
     }
 
     private static void populateInIsland(Island island) {// популяция животных и растений на всём острове
@@ -78,7 +79,6 @@ public class AppRunner {
     }
 
 
-
     private static void initPlantsInCell(IslandCell islandCell) {
         int currentPlantsInCell = 0;
         Random plantsRandomizer = new Random();
@@ -92,6 +92,15 @@ public class AppRunner {
             islandCell.setQuantityPlantsInCell(growFactor * islandCell.getQuantityPlantsInCell());
             System.out.println("");
         }
+    }
+
+    private static void herbivoresNutrition() {
+// getAllHerbivoresInSimulation for each Herbivores
+    }
+
+    private void getAllHerbivoresInSimulation(IslandCell islandCell) {
+        // get all herbivores in simulation
+        // return ArrayList all Herbivores
     }
 
 }

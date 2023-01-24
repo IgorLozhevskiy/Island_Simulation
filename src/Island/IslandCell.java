@@ -42,6 +42,14 @@ public boolean addToAnimalsInCell(Animal animal) {
         return y;
     }
 
+    public Map<AnimalType, Set<Animal>> getAnimalList() {
+        return animalList;
+    }
+
+    public void setAnimalList(Map<AnimalType, Set<Animal>> animalList) {
+        this.animalList = animalList;
+    }
+
     public int getQuantityPlantsInCell() {
         return quantityPlantsInCell;
     }
@@ -53,7 +61,7 @@ public boolean addToAnimalsInCell(Animal animal) {
 
     @Override
     public String toString() {
-        return "Cell x=" + x + ", y=" + y + ". " + "Island.Plants in Cell " + quantityPlantsInCell + plantsEmoji + ", ";
+        return "Cell x=" + x + ", y=" + y + ". " + "Plants in Cell " + quantityPlantsInCell + plantsEmoji + ", ";
     }
 
 }
