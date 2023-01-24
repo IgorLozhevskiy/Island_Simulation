@@ -18,25 +18,20 @@ public class IslandCell {
         this.plant = new Plants(quantityPlantsInCell);
     }
 
-//    public void addAnimal(Animal animal) { // добавляем животное
-//
-//        animalList.put(AnimalType, animal);
-//    }
+
 public boolean addToAnimalsInCell(Animal animal) {
     AnimalType animalType = animal.getAnimalType();
     int currentPopulation = animalList.computeIfAbsent(animalType, (k) -> new HashSet<>()).size();
     int maxAmountInCell = 10;
     if (currentPopulation > maxAmountInCell) {
-        System.out.printf("Animals in Cell %s is overpopulated with %s", this, animalType);
+        System.out.printf("Animals in Cell %s is overpopulated with %s \n", this, animalType);
         return false;
     }
     return animalList.get(animalType).add(animal);
 }
 
-
-    public void removeAnimal(Animal animal) { // удаляем животное
-
-        animalList.remove(animal);
+    public boolean removeAnimal(Animal animal) {
+        return animalList.get(animal.getAnimalType()).remove(animal);
     }
 
     public int getX() {

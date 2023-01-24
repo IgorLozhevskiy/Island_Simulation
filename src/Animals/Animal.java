@@ -16,7 +16,7 @@ public abstract class Animal {
     private final Island island;
     IslandCell position;
 
-    public Animal(Island island) {
+    public Animal(Island island, AnimalCharacteristics animalCharacteristics) {
         this.id = UUID.randomUUID();
         this.island = island;
     }

@@ -1,4 +1,16 @@
 package Animals.Predators;
 
-public class Wolf {
+import Animals.AnimalCharacteristics;
+import Animals.AnimalType;
+import Island.Island;
+
+public class Wolf extends Predators {
+    public Wolf(Island island, AnimalCharacteristics animalCharacteristics) {
+        super(island, animalCharacteristics);
+    }
+
+    @Override
+    public AnimalType getAnimalType() {
+        return AnimalType.WOLF;
+    }
 }

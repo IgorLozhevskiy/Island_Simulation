@@ -1,6 +1,9 @@
 package Simulation;
 
 import Animals.Animal;
+import Animals.AnimalCharacteristics;
+import Animals.AnimalType;
+import Animals.AnimalsFactory;
 import Island.Island;
 import Island.IslandCell;
 
@@ -56,18 +59,25 @@ public class AppRunner {
     }
 
     private static void populateAnimalsAndPlantsInCell(IslandCell islandCell, Island island) {
-        Random cellPopulationPicker = new Random();
-        int animalCount = cellPopulationPicker.nextInt(MAX_DEFAULT_ANIMAL_COUNT);
+        AnimalsFactory animalsFactory = AnimalsFactory.getAnimalsFactoryInstance();
 
-        for (int i = 0; i < animalCount; i++) {
-            Animal animal = new Animal(island);
+        Random cellPopulationPicker = new Random();
+        int animalCountInCell = cellPopulationPicker.nextInt(MAX_DEFAULT_ANIMAL_COUNT);
+
+        AnimalType animalType[] = AnimalType.values();
+        int animalTypeCount = cellPopulationPicker.nextInt(animalType.length);
+        AnimalType parseTypeFromEnum = AnimalType.values()[animalTypeCount];
+        for (int i = 0; i < animalCountInCell; i++) { //
+            Animal animal = animalsFactory.createAnimal(island, parseTypeFromEnum);
             animal.setPosition(islandCell);
             islandCell.addToAnimalsInCell(animal);
             allAnimals.add(animal);
         }
-        System.out.printf("%s populated with %s animals%n", islandCell, animalCount);
+        System.out.printf("%s populated with %s animals%n", islandCell, animalCountInCell);
         System.out.print("--------------------------------------------------------------\n");
     }
+
+
 
     private static void initPlantsInCell(IslandCell islandCell) {
         int currentPlantsInCell = 0;

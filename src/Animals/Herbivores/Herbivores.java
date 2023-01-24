@@ -2,12 +2,13 @@ package Animals.Herbivores;
 
 import Animals.Animal;
 import Animals.AnimalCharacteristics;
+import Animals.Eatable;
 import Island.Island;
-import org.w3c.dom.ls.LSOutput;
 
-public abstract class Herbivores extends Animal {
+public abstract class Herbivores extends Animal implements Eatable {
     public Herbivores(Island island, AnimalCharacteristics animalCharacteristics) {
-        super(animalCharacteristics);
+        super(island, animalCharacteristics);
     }
+
 
 }

@@ -2,7 +2,8 @@ package Animals;
 import Animals.Herbivores.Herbivores;
 import Animals.Herbivores.Horse;
 import Animals.Predators.Wolf;
-import java.util.Map;
+import Island.Island;
+import Config.AnimalsConfig;
 
 public class AnimalsFactory {
 
@@ -18,24 +19,24 @@ public class AnimalsFactory {
         return animalsFactoryInstance;
     }
 
-    public Animal createAnimal(AnimalType type) {
-
-        }
-        switch (type) {
-            case WOLF:
-            case HORSE:
-            case SNAKE:
-            case FOX:
-            case BEAR:
-            case EAGLE:
-            case DEER:
-            case RABBIT:
-            case MOUSE:
-            case GOAT:
-            case SHEEP:
-            case WILD_BOAR:
-            case BUFFALO:
-            case DUCK:
-        }
+    public Animal createAnimal(Island island, AnimalType animalType) {
+        Animal animal =
+                switch (animalType) {
+                    case WOLF -> new Wolf(island, AnimalsConfig.getInstance().getMap().get(AnimalType.WOLF));
+                    case HORSE -> new Horse(island, AnimalsConfig.getInstance().getMap().get(AnimalType.HORSE));
+//                    case SNAKE:
+//                    case FOX:
+//                    case BEAR:
+//                    case EAGLE:
+//                    case DEER:
+//                    case RABBIT:
+//                    case MOUSE:
+//                    case GOAT:
+//                    case SHEEP:
+//                    case WILD_BOAR:
+//                    case BUFFALO:
+//                    case DUCK:
+                };
+        return animal;
     }
 }
