@@ -1,10 +1,10 @@
 package Simulation;
 
 import Animals.Animal;
-import Animals.AnimalCharacteristics;
+
 import Animals.AnimalType;
 import Animals.AnimalsFactory;
-import Animals.Herbivores.Herbivores;
+
 import Island.Island;
 import Island.IslandCell;
 
@@ -20,14 +20,17 @@ public class AppRunner {
 
     private static int MAX_PLANTS_IN_CELL = 200;
 
-        private static List<Animal> allAnimals = new ArrayList<>();
-//    private static Map<AnimalType, Set<Animal>> allAnimals = new HashMap<>();
+    private static List<Animal> allAnimals = new ArrayList<>();
+  private static Map<AnimalType, Set<Animal>> mapAllAnimals = new HashMap<>();
     Island island = new Island(5, 3);
+
+
 
     public void runSimulation() {
         populateInIsland(island);
-        System.out.println("Total ANIMALS in Island.Island = " + allAnimals.size());
-        System.out.println("Total PLANTS in Island.Island = " + island.toString());
+        System.out.println("Total ANIMALS in Island = " + allAnimals.size());
+        System.out.println("Total ANIMALS \"mapAllAnimals\" in Island = " + mapAllAnimals.size());
+        System.out.println("Total PLANTS in Island = " + island.toString());
 
         int dayCount = 0;
         do {
@@ -43,7 +46,7 @@ public class AppRunner {
 
     private static void startDay() {
         allAnimals.forEach(Animal::move); // 1
-        herbivoresNutrition(); //2 травоядные поели траву
+//        herbivoresNutrition(); //2 травоядные поели траву
         //3 хищники поели травоядных
         //4 рост травы, фактор х1.5 growthRestorationOfPlants()
         // 5 чем закончится симуляция? Симуляция заканчивается логированием, в котором будет написано на каком ходу все хищники съели всех травоядных
@@ -61,19 +64,33 @@ public class AppRunner {
 
     private static void populateAnimalsAndPlantsInCell(IslandCell islandCell, Island island) {
         AnimalsFactory animalsFactory = AnimalsFactory.getAnimalsFactoryInstance();
+        Set<Animal> setAnimalList;
 
         Random cellPopulationPicker = new Random();
         int animalCountInCell = cellPopulationPicker.nextInt(MAX_DEFAULT_ANIMAL_COUNT);
+        AnimalType animalType[] = AnimalType.values(); //достали все значения и сложили их в массив объектов энама
 
-        AnimalType animalType[] = AnimalType.values();
-        int animalTypeCount = cellPopulationPicker.nextInt(animalType.length);
-        AnimalType parseTypeFromEnum = AnimalType.values()[animalTypeCount];
         for (int i = 0; i < animalCountInCell; i++) { //
+            int animalTypeCount = cellPopulationPicker.nextInt(animalType.length); // рандом до длины нашего массива, т.е. 2х
+            AnimalType parseTypeFromEnum = AnimalType.values()[animalTypeCount]; // парсинг рандомной инты снова в объект энама
             Animal animal = animalsFactory.createAnimal(island, parseTypeFromEnum);
             animal.setPosition(islandCell);
             islandCell.addToAnimalsInCell(animal);
             allAnimals.add(animal);
+            AnimalType animalTypeForMap = animal.getAnimalType();
+            mapAllAnimals.put(animalTypeForMap, animal); // ??:(
+//
+//          for (animal: animal.getPosition()) {
+//              setAnimalList.computeIfAbsent(animal, (k) -> new HashSet<>()).size();
+//          }
+//            Set<Animal> allAnimals = map.values().stream()
+//                    .flatMap(Set::stream)
+//                    .collect(toSet());
+////            allAnimals.add(animal);
+//            mapAllAnimals.put(parseTypeFromEnum, (Set<Animal>) animal);
+
         }
+
         System.out.printf("%s populated with %s animals%n", islandCell, animalCountInCell);
         System.out.print("--------------------------------------------------------------\n");
     }
@@ -93,14 +110,12 @@ public class AppRunner {
             System.out.println("");
         }
     }
-
-    private static void herbivoresNutrition() {
-// getAllHerbivoresInSimulation for each Herbivores
-    }
-
-    private void getAllHerbivoresInSimulation(IslandCell islandCell) {
-        // get all herbivores in simulation
-        // return ArrayList all Herbivores
-    }
+//private static void getNutritionForHerbivores () {
+//    Map<AnimalType, Set<Animal>> mapAllAnimals;
+//    Set<Animal> mapAllAnimals = map.values().stream()
+//            .flatMap(Set::stream)
+//            .collect(toSet());
+//}
 
 }
+

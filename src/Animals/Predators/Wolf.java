@@ -10,6 +10,11 @@ public class Wolf extends Predators {
     }
 
     @Override
+    public void eat() {
+
+    }
+
+    @Override
     public AnimalType getAnimalType() {
         return AnimalType.WOLF;
     }

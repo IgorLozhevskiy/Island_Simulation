@@ -10,6 +10,11 @@ public class Horse extends Herbivores{
     }
 
     @Override
+    public void eat() {
+        super.eat();
+    }
+
+    @Override
     public AnimalType getAnimalType() {
         return AnimalType.HORSE;
     }
