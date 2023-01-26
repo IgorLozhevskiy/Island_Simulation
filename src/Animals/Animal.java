@@ -8,7 +8,7 @@ import Simulation.AppRunner;
 import java.util.Random;
 import java.util.UUID;
 
-public abstract class Animal implements Eatable  {
+public abstract class Animal implements Eatable, Runnable  {
     private static final int MOVE_DISTANCE = 3;
 
     private UUID id;
@@ -21,6 +21,18 @@ public abstract class Animal implements Eatable  {
         this.island = island;
     }
     public abstract AnimalType getAnimalType();
+
+    @Override
+    public void run() {
+        liveDay();
+    }
+
+    public void liveDay() {
+        move();
+        eat();
+        die();
+        reprodce();
+    }
     public void move() {
         System.out.println("Animals.Animal started moving. Current position - " + position);
         Random moveDecider = new Random();
@@ -118,5 +130,7 @@ public abstract class Animal implements Eatable  {
         return id.hashCode();
     }
 
-    public abstract void eat();
+    @Override
+    public void eat(int amountOfFood) {
+    }
 }

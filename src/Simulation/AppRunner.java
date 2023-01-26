@@ -9,7 +9,10 @@ import Island.Island;
 import Island.IslandCell;
 
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class AppRunner {
     private static int MAX_DEFAULT_ANIMAL_COUNT = 10;
@@ -21,15 +24,20 @@ public class AppRunner {
     private static int MAX_PLANTS_IN_CELL = 200;
 
     private static List<Animal> allAnimals = new ArrayList<>();
-  private static Map<AnimalType, Set<Animal>> mapAllAnimals = new HashMap<>();
+    private static Map<AnimalType, Set<Animal>> animalsByType;
     Island island = new Island(5, 3);
 
-
+    static {
+        animalsByType = new HashMap<>();
+        for (AnimalType value : AnimalType.values()) {
+            animalsByType.put(value, new HashSet<>());
+        }
+    }
 
     public void runSimulation() {
         populateInIsland(island);
         System.out.println("Total ANIMALS in Island = " + allAnimals.size());
-        System.out.println("Total ANIMALS \"mapAllAnimals\" in Island = " + mapAllAnimals.size());
+        System.out.println("Total ANIMALS \"mapAllAnimals\" in Island = " + animalsByType.size());
         System.out.println("Total PLANTS in Island = " + island.toString());
 
         int dayCount = 0;
@@ -45,7 +53,13 @@ public class AppRunner {
     }
 
     private static void startDay() {
+        ExecutorService executorService = Executors.newCachedThreadPool();
         allAnimals.forEach(Animal::move); // 1
+        Set<Animal> allAnimals = animalsByType.values().stream()
+                .flatMap(Set::stream)
+                .collect(Collectors.toSet());
+       allAnimals.forEach(Animal::liveDay);
+        //printStats
 //        herbivoresNutrition(); //2 травоядные поели траву
         //3 хищники поели травоядных
         //4 рост травы, фактор х1.5 growthRestorationOfPlants()
@@ -68,7 +82,7 @@ public class AppRunner {
 
         Random cellPopulationPicker = new Random();
         int animalCountInCell = cellPopulationPicker.nextInt(MAX_DEFAULT_ANIMAL_COUNT);
-        AnimalType animalType[] = AnimalType.values(); //достали все значения и сложили их в массив объектов энама
+        AnimalType[] animalType = AnimalType.values(); //достали все значения и сложили их в массив объектов энама
 
         for (int i = 0; i < animalCountInCell; i++) { //
             int animalTypeCount = cellPopulationPicker.nextInt(animalType.length); // рандом до длины нашего массива, т.е. 2х
@@ -77,8 +91,9 @@ public class AppRunner {
             animal.setPosition(islandCell);
             islandCell.addToAnimalsInCell(animal);
             allAnimals.add(animal);
-            AnimalType animalTypeForMap = animal.getAnimalType();
-            mapAllAnimals.put(animalTypeForMap, animal); // ??:(
+            animalsByType.get(animal.getAnimalType()).add(animal);
+//            AnimalType animalTypeForMap = animal.getAnimalType();
+//            mapAllAnimals.put(animalTypeForMap, animal); // ??:(
 //
 //          for (animal: animal.getPosition()) {
 //              setAnimalList.computeIfAbsent(animal, (k) -> new HashSet<>()).size();

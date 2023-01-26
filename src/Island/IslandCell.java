@@ -2,6 +2,7 @@ package Island;
 
 import Animals.Animal;
 import Animals.AnimalType;
+import Animals.Predators.Wolf;
 
 import java.util.*;
 

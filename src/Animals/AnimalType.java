@@ -4,6 +4,8 @@ import Animals.Predators.Predators;
 import Animals.Predators.Wolf;
 
 import java.sql.Array;
+import java.util.Arrays;
+import java.util.List;
 
 public enum AnimalType {
     // Herbivores
@@ -26,5 +28,13 @@ public enum AnimalType {
 //    BEAR,
 //    EAGLE,
 
+
+    public static List<AnimalType> getHerbivorusTypes() {
+        return List.of(HORSE);
+    }
+
+    public static List<AnimalType> getPredatorsTypes() {
+        return List.of(WOLF);
+    }
 
 }
