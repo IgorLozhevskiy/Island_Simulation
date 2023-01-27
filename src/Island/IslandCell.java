@@ -2,7 +2,6 @@ package Island;
 
 import Animals.Animal;
 import Animals.AnimalType;
-import Animals.Predators.Wolf;
 
 import java.util.*;
 
@@ -11,29 +10,31 @@ public class IslandCell {
     int x;
     int y;
     private int quantityPlantsInCell;
-    Map<AnimalType, Set<Animal>> animalList;
+    //    Map<AnimalType, Set<Animal>> animalsByTypeInCell;
+    Map<AnimalType, List<Animal>> animalsByTypeInCell;
     private Plants plant;
 
     public IslandCell(int x, int y) {
         this.x = x;
         this.y = y;
-        this.animalList = new HashMap<>();
+        this.animalsByTypeInCell = new HashMap<>();
         this.plant = new Plants(quantityPlantsInCell);
     }
 
-    public boolean addToAnimalsInCell(Animal animal) {
+    public boolean addOneAnimalInCell(Animal animal) {
         AnimalType animalType = animal.getAnimalType();
-        int currentPopulation = animalList.computeIfAbsent(animalType, (k) -> new HashSet<>()).size();
-        int maxAmountInCell = 10;
-        if (currentPopulation > maxAmountInCell) {
-            System.out.printf("Animals in Cell %s is overpopulated with %s \n", this, animalType);
-            return false;
-        }
-        return animalList.get(animalType).add(animal);
+//        int currentPopulation = animalsByTypeInCell.computeIfAbsent(animalType, (k) -> new HashSet<>()).size();
+        int currentPopulation = animalsByTypeInCell.computeIfAbsent(animalType, (k) -> new ArrayList<>()).size();
+//        int maxAmountInCell = 10;
+//        if (currentPopulation > maxAmountInCell) {
+//            System.out.printf("Animals in Cell %s is overpopulated with %s \n", this, animalType);
+//            return false;
+//        }
+        return animalsByTypeInCell.get(animalType).add(animal);
     }
 
     public boolean removeAnimal(Animal animal) {
-        return animalList.get(animal.getAnimalType()).remove(animal);
+        return animalsByTypeInCell.get(animal.getAnimalType()).remove(animal);
     }
 
     public int getX() {
@@ -44,8 +45,11 @@ public class IslandCell {
         return y;
     }
 
-    public Map<AnimalType, Set<Animal>> getAnimalList() {
-        return animalList;
+//    public Map<AnimalType, Set<Animal>> getAnimalsByTypeInCell() {
+//        return animalsByTypeInCell;
+//    }
+        public Map<AnimalType, List<Animal>> getAnimalsByTypeInCell() {
+        return animalsByTypeInCell;
     }
 
     public int getQuantityPlantsInCell() {

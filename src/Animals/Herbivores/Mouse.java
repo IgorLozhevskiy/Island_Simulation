@@ -2,15 +2,16 @@ package Animals.Predators;
 
 import Animals.AnimalCharacteristics;
 import Animals.AnimalType;
+import Animals.Herbivores.Herbivores;
 import Island.Island;
 
-public class Wolf extends Predators {
-    public Wolf(Island island, AnimalCharacteristics animalCharacteristics) {
+public class Mouse extends Herbivores {
+    public Mouse(Island island, AnimalCharacteristics animalCharacteristics) {
         super(island, animalCharacteristics);
     }
 
     @Override
     public AnimalType getAnimalType() {
-        return AnimalType.WOLF;
+        return AnimalType.MOUSE;
     }
 }

@@ -1,19 +1,16 @@
-package Animals.Herbivores;
+package Animals.Predators;
+
 import Animals.AnimalCharacteristics;
 import Animals.AnimalType;
 import Island.Island;
 
-public class Horse extends Herbivores{
-
-    public Horse(Island island, AnimalCharacteristics animalCharacteristics) {
+public class Fox extends Predators {
+    public Fox(Island island, AnimalCharacteristics animalCharacteristics) {
         super(island, animalCharacteristics);
     }
 
-
     @Override
     public AnimalType getAnimalType() {
-        return AnimalType.HORSE;
+        return AnimalType.FOX;
     }
-
-
 }

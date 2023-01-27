@@ -2,9 +2,11 @@ package Simulation;
 
 import Animals.Animal;
 
+import Animals.AnimalCharacteristics;
 import Animals.AnimalType;
 import Animals.AnimalsFactory;
 
+import Animals.Herbivores.Herbivores;
 import Island.Island;
 import Island.IslandCell;
 
@@ -14,7 +16,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-public class AppRunner {
+public class InitSimulation {
+    private static AnimalCharacteristics animalCharacteristics;
     private static int MAX_DEFAULT_ANIMAL_COUNT = 10;
 
     private static int SIMULATION_DURATION = 10;
@@ -24,20 +27,22 @@ public class AppRunner {
     private static int MAX_PLANTS_IN_CELL = 200;
 
     private static List<Animal> allAnimals = new ArrayList<>();
-    private static Map<AnimalType, Set<Animal>> animalsByType;
+    //    private static Map<AnimalType, Set<Animal>> animalsByType;
+    private static Map<AnimalType, List<Animal>> animalsByType;
     Island island = new Island(5, 3);
 
     static {
         animalsByType = new HashMap<>();
         for (AnimalType value : AnimalType.values()) {
-            animalsByType.put(value, new HashSet<>());
+//            animalsByType.put(value, new HashSet<>());
+            animalsByType.put(value, new ArrayList<>());
         }
     }
 
     public void runSimulation() {
         populateInIsland(island);
         System.out.println("Total ANIMALS in Island = " + allAnimals.size());
-        System.out.println("Total ANIMALS \"mapAllAnimals\" in Island = " + animalsByType.size());
+        System.out.println("Total ANIMALS \"animalsByType\" in Island = " + animalsByType.size());
         System.out.println("Total PLANTS in Island = " + island.toString());
 
         int dayCount = 0;
@@ -55,10 +60,11 @@ public class AppRunner {
     private static void startDay() {
         ExecutorService executorService = Executors.newCachedThreadPool();
         allAnimals.forEach(Animal::move); // 1
-        Set<Animal> allAnimals = animalsByType.values().stream()
-                .flatMap(Set::stream)
-                .collect(Collectors.toSet());
-       allAnimals.forEach(Animal::liveDay);
+        //2 eatingAllAimals();
+//        Set<Animal> allAnimals = animalsByType.values().stream()
+//                .flatMap(Set::stream)
+//                .collect(Collectors.toSet());
+//       allAnimals.forEach(Animal::liveDay);
         //printStats
 //        herbivoresNutrition(); //2 травоядные поели траву
         //3 хищники поели травоядных
@@ -78,31 +84,19 @@ public class AppRunner {
 
     private static void populateAnimalsAndPlantsInCell(IslandCell islandCell, Island island) {
         AnimalsFactory animalsFactory = AnimalsFactory.getAnimalsFactoryInstance();
-        Set<Animal> setAnimalList;
-
         Random cellPopulationPicker = new Random();
-        int animalCountInCell = cellPopulationPicker.nextInt(MAX_DEFAULT_ANIMAL_COUNT);
-        AnimalType[] animalType = AnimalType.values(); //достали все значения и сложили их в массив объектов энама
+        int animalCountInCell = cellPopulationPicker.nextInt(MAX_DEFAULT_ANIMAL_COUNT); // рандомное кол-во от 0 до 10 сколько в одной клетке будет животных
+//        int animalCountInCell = cellPopulationPicker.nextInt(animalCharacteristics.getMaxNumAnimalsInCell()); // рандомное кол-во от 0 до 10
+        AnimalType[] animalType = AnimalType.values(); //достали все значения и сложили их в массив объектов энама// 14
 
-        for (int i = 0; i < animalCountInCell; i++) { //
-            int animalTypeCount = cellPopulationPicker.nextInt(animalType.length); // рандом до длины нашего массива, т.е. 2х
-            AnimalType parseTypeFromEnum = AnimalType.values()[animalTypeCount]; // парсинг рандомной инты снова в объект энама
-            Animal animal = animalsFactory.createAnimal(island, parseTypeFromEnum);
+        for (int i = 0; i < animalCountInCell; i++) { // от 1 цикла до 10 как решит рандом
+            int animalTypeCount = cellPopulationPicker.nextInt(animalType.length); // рандомное число - соответственно либо:1 или 14
+            AnimalType parseTypeFromEnum = AnimalType.values()[animalTypeCount]; // преобразовываем рандомное число, которое будет соответствовать конкретному животному энама
+            Animal animal = animalsFactory.createAnimal(island, parseTypeFromEnum); // создаём конкретное животное по типу
+            islandCell.addOneAnimalInCell(animal);
             animal.setPosition(islandCell);
-            islandCell.addToAnimalsInCell(animal);
             allAnimals.add(animal);
             animalsByType.get(animal.getAnimalType()).add(animal);
-//            AnimalType animalTypeForMap = animal.getAnimalType();
-//            mapAllAnimals.put(animalTypeForMap, animal); // ??:(
-//
-//          for (animal: animal.getPosition()) {
-//              setAnimalList.computeIfAbsent(animal, (k) -> new HashSet<>()).size();
-//          }
-//            Set<Animal> allAnimals = map.values().stream()
-//                    .flatMap(Set::stream)
-//                    .collect(toSet());
-////            allAnimals.add(animal);
-//            mapAllAnimals.put(parseTypeFromEnum, (Set<Animal>) animal);
 
         }
 
@@ -117,6 +111,27 @@ public class AppRunner {
         islandCell.setQuantityPlantsInCell(plantsRandomizer.nextInt(MAX_PLANTS_IN_CELL));
         currentPlantsInCell = islandCell.getQuantityPlantsInCell();
     }
+//   private static void eatingAllAnimals(){
+    private void herbivoreNutrition(Island island) {
+        this.island = island;
+        for (int i = 0; i < island.xDimension; i++) {
+            for (int j = 0; j < island.yDimension; j++) {
+                getAllHerbivoresInSimulation(island.islandGrid[i][j]);
+
+            }
+        ();
+    }
+    //predatorNutrition();
+//}
+
+    private  List<Herbivores> getAllHerbivoresInSimulation() {
+        this.animalsByType = animalsByType;
+        List<Herbivores> currentHerbivores = new ArrayList<>();
+        currentHerbivores = animalsByType.entrySet().stream().filter( it-> AnimalType.getHerbivoresTypes()).collect(Collectors.toList());
+
+        return currentHerbivores;
+    }
+
 
     private static void growthRestorationOfPlantsInCell(IslandCell islandCell) {
         int growFactor = 1;
@@ -125,6 +140,7 @@ public class AppRunner {
             System.out.println("");
         }
     }
+
 //private static void getNutritionForHerbivores () {
 //    Map<AnimalType, Set<Animal>> mapAllAnimals;
 //    Set<Animal> mapAllAnimals = map.values().stream()

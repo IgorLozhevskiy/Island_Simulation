@@ -5,15 +5,15 @@ public class AnimalCharacteristics {
     private final String emoji;
     private final String name;
     private final double maxWeight;
-    private final int maxNumInCell;
+    private final int maxNumAnimalsInCell;
     private final int maxSpeed;
     private final double amountOfFood;
 
-    public AnimalCharacteristics(String name, String emoji, double maxWeight, int maxNumInCell, int maxSpeed, double amountOfFood) {
+    public AnimalCharacteristics(String name, String emoji, double maxWeight, int maxNumAnimalsInCell, int maxSpeed, double amountOfFood) {
         this.name = name;
         this.emoji = emoji;
         this.maxWeight = maxWeight;
-        this.maxNumInCell = maxNumInCell;
+        this.maxNumAnimalsInCell = maxNumAnimalsInCell;
         this.maxSpeed = maxSpeed;
         this.amountOfFood = amountOfFood;
     }
@@ -30,8 +30,8 @@ public class AnimalCharacteristics {
         return maxWeight;
     }
 
-    public int getMaxNumInCell() {
-        return maxNumInCell;
+    public int getMaxNumAnimalsInCell() {
+        return maxNumAnimalsInCell;
     }
 
     public int getMaxSpeed() {

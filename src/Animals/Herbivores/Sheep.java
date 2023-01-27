@@ -3,16 +3,16 @@ import Animals.AnimalCharacteristics;
 import Animals.AnimalType;
 import Island.Island;
 
-public class Horse extends Herbivores{
+public class Sheep extends Herbivores{
 
-    public Horse(Island island, AnimalCharacteristics animalCharacteristics) {
+    public Sheep(Island island, AnimalCharacteristics animalCharacteristics) {
         super(island, animalCharacteristics);
     }
 
 
     @Override
     public AnimalType getAnimalType() {
-        return AnimalType.HORSE;
+        return AnimalType.SHEEP;
     }
 
 

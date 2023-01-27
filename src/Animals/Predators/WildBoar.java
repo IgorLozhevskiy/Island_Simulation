@@ -1,18 +1,19 @@
 package Animals.Herbivores;
 import Animals.AnimalCharacteristics;
 import Animals.AnimalType;
+import Animals.Predators.Predators;
 import Island.Island;
 
-public class Horse extends Herbivores{
+public class WildBoar extends Predators {
 
-    public Horse(Island island, AnimalCharacteristics animalCharacteristics) {
+    public WildBoar(Island island, AnimalCharacteristics animalCharacteristics) {
         super(island, animalCharacteristics);
     }
 
 
     @Override
     public AnimalType getAnimalType() {
-        return AnimalType.HORSE;
+        return AnimalType.WILD_BOAR;
     }
 
 

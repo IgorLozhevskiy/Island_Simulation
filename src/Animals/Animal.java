@@ -3,12 +3,12 @@ package Animals;
 import Island.Direction;
 import Island.Island;
 import Island.IslandCell;
-import Simulation.AppRunner;
+import Simulation.InitSimulation;
 
 import java.util.Random;
 import java.util.UUID;
 
-public abstract class Animal implements Eatable, Runnable  {
+public abstract class Animal implements Eatable { // Runnable
     private static final int MOVE_DISTANCE = 3;
 
     private UUID id;
@@ -22,17 +22,17 @@ public abstract class Animal implements Eatable, Runnable  {
     }
     public abstract AnimalType getAnimalType();
 
-    @Override
-    public void run() {
-        liveDay();
-    }
+//    @Override
+//    public void run() {
+//        liveDay();
+//    }
 
-    public void liveDay() {
-        move();
-        eat();
-        die();
-        reprodce();
-    }
+//    public void liveDay() {
+//        move();
+//        eat();
+//        die();
+//        reprodce();
+//    }
     public void move() {
         System.out.println("Animals.Animal started moving. Current position - " + position);
         Random moveDecider = new Random();
@@ -57,7 +57,7 @@ public abstract class Animal implements Eatable, Runnable  {
             direction = directions[directionPicker.nextInt(directions.length)];
         } while (!directionValid(direction));
         changePosition(direction);
-        AppRunner.movesCount.incrementAndGet();
+        InitSimulation.movesCount.incrementAndGet();
     }
 
     private boolean directionValid(Direction direction) {
@@ -102,7 +102,7 @@ public abstract class Animal implements Eatable, Runnable  {
         IslandCell newIslandCell = island.islandGrid[newX][newY];
         this.position.removeAnimal(this);
         this.position = newIslandCell;
-        this.position.addToAnimalsInCell(this);
+        this.position.addOneAnimalInCell(this);
         System.out.println("Position changed...");
     }
 
