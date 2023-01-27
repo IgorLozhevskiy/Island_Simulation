@@ -117,9 +117,9 @@ public class InitSimulation {
         for (int i = 0; i < island.xDimension; i++) {
             for (int j = 0; j < island.yDimension; j++) {
                 getAllHerbivoresInSimulation(island.islandGrid[i][j]);
+            }
 
             }
-        ();
     }
     //predatorNutrition();
 //}
