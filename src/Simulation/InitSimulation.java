@@ -1,14 +1,13 @@
 package Simulation;
 
-import Animals.Animal;
+import animals.Animal;
 
-import Animals.AnimalCharacteristics;
-import Animals.AnimalType;
-import Animals.AnimalsFactory;
+import animals.AnimalCharacteristics;
+import animals.AnimalType;
+import animals.AnimalsFactory;
 
-import Animals.Herbivores.Herbivores;
-import Island.Island;
-import Island.IslandCell;
+import island.Island;
+import island.IslandCell;
 
 import java.util.*;
 import java.util.concurrent.ExecutorService;
@@ -17,6 +16,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class InitSimulation {
+
+
     private static AnimalCharacteristics animalCharacteristics;
     private static int MAX_DEFAULT_ANIMAL_COUNT = 10;
 
@@ -27,15 +28,15 @@ public class InitSimulation {
     private static int MAX_PLANTS_IN_CELL = 200;
 
     private static List<Animal> allAnimals = new ArrayList<>();
-    //    private static Map<AnimalType, Set<Animal>> animalsByType;
-    private static Map<AnimalType, List<Animal>> animalsByType;
+    private static Map<AnimalType, Set<Animal>> animalsByType;
+    //    private static Map<AnimalType, List<Animal>> animalsByType;
     Island island = new Island(5, 3);
 
     static {
         animalsByType = new HashMap<>();
         for (AnimalType value : AnimalType.values()) {
-//            animalsByType.put(value, new HashSet<>());
-            animalsByType.put(value, new ArrayList<>());
+            animalsByType.put(value, new HashSet<>());
+//            animalsByType.put(value, new ArrayList<>());
         }
     }
 
@@ -57,20 +58,11 @@ public class InitSimulation {
         System.out.println("Total moves done = " + movesCount.toString());
     }
 
-    private static void startDay() {
+    private void startDay() {
         ExecutorService executorService = Executors.newCachedThreadPool();
+        // liveDay();
         allAnimals.forEach(Animal::move); // 1
-        //2 eatingAllAimals();
-//        Set<Animal> allAnimals = animalsByType.values().stream()
-//                .flatMap(Set::stream)
-//                .collect(Collectors.toSet());
-//       allAnimals.forEach(Animal::liveDay);
-        //printStats
-//        herbivoresNutrition(); //2 травоядные поели траву
-        //3 хищники поели травоядных
-        //4 рост травы, фактор х1.5 growthRestorationOfPlants()
-        // 5 чем закончится симуляция? Симуляция заканчивается логированием, в котором будет написано на каком ходу все хищники съели всех травоядных
-        // счётчик дней рандомным числом до 15 дней? И посмотреть в какой срок останутся на острове только хищники
+        island.getAllCells().forEach(IslandCell::growthRestorationOfPlantsInCell);
     }
 
     private static void populateInIsland(Island island) {// популяция животных и растений на всём острове
@@ -112,34 +104,38 @@ public class InitSimulation {
         currentPlantsInCell = islandCell.getQuantityPlantsInCell();
     }
 //   private static void eatingAllAnimals(){
-    private void herbivoreNutrition(Island island) {
-        this.island = island;
-        for (int i = 0; i < island.xDimension; i++) {
-            for (int j = 0; j < island.yDimension; j++) {
-                getAllHerbivoresInSimulation(island.islandGrid[i][j]);
-            }
-
-            }
-    }
+//    private void herbivoreNutrition(Island island) {
+//        this.island = island;
+//        for (int i = 0; i < island.xDimension; i++) {
+//            for (int j = 0; j < island.yDimension; j++) {
+//                getAllHerbivoresInSimulation(island.islandGrid[i][j]);
+//            }
+//
+//            }
+//    }
     //predatorNutrition();
 //}
 
-    private  List<Herbivores> getAllHerbivoresInSimulation() {
-        this.animalsByType = animalsByType;
-        List<Herbivores> currentHerbivores = new ArrayList<>();
-        currentHerbivores = animalsByType.entrySet().stream().filter( it-> AnimalType.getHerbivoresTypes()).collect(Collectors.toList());
+//    private  List<Herbivores> getAllHerbivoresInSimulation() {
+//        this.animalsByType = animalsByType;
+//        List<Herbivores> currentHerbivores = new ArrayList<>();
+//        currentHerbivores = animalsByType.entrySet().stream().filter( it-> AnimalType.getHerbivoresTypes()).collect(Collectors.toList());
+//
+//        return currentHerbivores;
+//    }
 
-        return currentHerbivores;
+    private static Set<Animal> getHerbivoresInSimulation() {
+        return animalsByType.entrySet().stream()
+                .filter(it -> AnimalType.getHerbivoresTypes().contains(it.getKey()))
+                .map(Map.Entry::getValue)
+                .flatMap(Set::stream)
+                .collect(Collectors.toSet());
     }
 
-
-    private static void growthRestorationOfPlantsInCell(IslandCell islandCell) {
-        int growFactor = 1;
-        if (islandCell.getQuantityPlantsInCell() == 1) {
-            islandCell.setQuantityPlantsInCell(growFactor * islandCell.getQuantityPlantsInCell());
-            System.out.println("");
-        }
-    }
+//    public void method (Animal animal) {
+//        animal.getPosition();
+//        Map<AnimalType, Set<Animal>> animals;
+//    }
 
 //private static void getNutritionForHerbivores () {
 //    Map<AnimalType, Set<Animal>> mapAllAnimals;
