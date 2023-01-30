@@ -2,6 +2,7 @@ package animals.predators;
 
 import animals.Animal;
 import animals.AnimalCharacteristics;
+import animals.AnimalType;
 import animals.herbivores.Herbivores;
 import config.AnimalsConfig;
 import island.Island;
@@ -24,8 +25,10 @@ public abstract class Predators extends Animal {
         int probabilityOfEating = AnimalsConfig.getInstance().getProbabilityOfEating(this, prey);
         if (new Random().nextInt(100) <= probabilityOfEating) {
             // prey is eaten by predator
+            position.removeAnimalInCell(this);
         } else {
             //prey successfully ran away
+            System.out.println("Herbivore successfully ran away");
         }
     }
 }

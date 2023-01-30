@@ -34,7 +34,7 @@ public class IslandCell {
         return groupAnimalsByType.get(herbivore).add(animal);
     }
 
-    public boolean removeAnimal(Animal animal) {
+    public boolean removeAnimalInCell(Animal animal) {
         if (AnimalType.getHerbivoresTypes().contains(animal.getAnimalType())) {
             return groupAnimalsByType.get(true).remove(animal);
         } else {

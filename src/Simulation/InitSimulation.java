@@ -6,6 +6,8 @@ import animals.AnimalCharacteristics;
 import animals.AnimalType;
 import animals.AnimalsFactory;
 
+import animals.herbivores.Herbivores;
+import animals.predators.Wolf;
 import island.Island;
 import island.IslandCell;
 
@@ -36,7 +38,6 @@ public class InitSimulation {
         animalsByType = new HashMap<>();
         for (AnimalType value : AnimalType.values()) {
             animalsByType.put(value, new HashSet<>());
-//            animalsByType.put(value, new ArrayList<>());
         }
     }
 
@@ -45,6 +46,11 @@ public class InitSimulation {
         System.out.println("Total ANIMALS in Island = " + allAnimals.size());
         System.out.println("Total ANIMALS \"animalsByType\" in Island = " + animalsByType.size());
         System.out.println("Total PLANTS in Island = " + island.toString());
+        System.out.println("Total Herbivores in Simulation:");
+        System.out.println(getHerbivoresInSimulation().toString());
+        System.out.println("Total Predators in Simulation:");
+        System.out.println(getPredatorsInSimulation().toString());
+
 
         int dayCount = 0;
         do {
@@ -56,16 +62,19 @@ public class InitSimulation {
 
         System.out.println("Simulation had finished!");
         System.out.println("Total moves done = " + movesCount.toString());
+
+
     }
 
     private void startDay() {
-        ExecutorService executorService = Executors.newCachedThreadPool();
-        // liveDay();
-        allAnimals.forEach(Animal::move); // 1
-        island.getAllCells().forEach(IslandCell::growthRestorationOfPlantsInCell);
+//        ExecutorService executorService = Executors.newCachedThreadPool();
+// liveDay();
+//        allAnimals.forEach(Animal::move); // 1
+//        island.getAllCells().forEach(IslandCell::growthRestorationOfPlantsInCell);
+
     }
 
-    private static void populateInIsland(Island island) {// популяция животных и растений на всём острове
+    private static void populateInIsland(Island island) {
         for (int i = 0; i < island.xDimension; i++) {
             for (int j = 0; j < island.yDimension; j++) {
                 initPlantsInCell(island.islandGrid[i][j]);
@@ -103,26 +112,6 @@ public class InitSimulation {
         islandCell.setQuantityPlantsInCell(plantsRandomizer.nextInt(MAX_PLANTS_IN_CELL));
         currentPlantsInCell = islandCell.getQuantityPlantsInCell();
     }
-//   private static void eatingAllAnimals(){
-//    private void herbivoreNutrition(Island island) {
-//        this.island = island;
-//        for (int i = 0; i < island.xDimension; i++) {
-//            for (int j = 0; j < island.yDimension; j++) {
-//                getAllHerbivoresInSimulation(island.islandGrid[i][j]);
-//            }
-//
-//            }
-//    }
-    //predatorNutrition();
-//}
-
-//    private  List<Herbivores> getAllHerbivoresInSimulation() {
-//        this.animalsByType = animalsByType;
-//        List<Herbivores> currentHerbivores = new ArrayList<>();
-//        currentHerbivores = animalsByType.entrySet().stream().filter( it-> AnimalType.getHerbivoresTypes()).collect(Collectors.toList());
-//
-//        return currentHerbivores;
-//    }
 
     private static Set<Animal> getHerbivoresInSimulation() {
         return animalsByType.entrySet().stream()
@@ -130,19 +119,14 @@ public class InitSimulation {
                 .map(Map.Entry::getValue)
                 .flatMap(Set::stream)
                 .collect(Collectors.toSet());
+    }    private static Set<Animal> getPredatorsInSimulation() {
+        return animalsByType.entrySet().stream()
+                .filter(it -> AnimalType.getPredatorsTypes().contains(it.getKey()))
+                .map(Map.Entry::getValue)
+                .flatMap(Set::stream)
+                .collect(Collectors.toSet());
     }
 
-//    public void method (Animal animal) {
-//        animal.getPosition();
-//        Map<AnimalType, Set<Animal>> animals;
-//    }
-
-//private static void getNutritionForHerbivores () {
-//    Map<AnimalType, Set<Animal>> mapAllAnimals;
-//    Set<Animal> mapAllAnimals = map.values().stream()
-//            .flatMap(Set::stream)
-//            .collect(toSet());
-//}
 
 }
 
