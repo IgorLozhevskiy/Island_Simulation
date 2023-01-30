@@ -29,7 +29,7 @@ public class InitSimulation {
 
     private static int MAX_PLANTS_IN_CELL = 200;
 
-    private static List<Animal> allAnimals = new ArrayList<>();
+    public static List<Animal> allAnimals = new ArrayList<>();
     private static Map<AnimalType, Set<Animal>> animalsByType;
     //    private static Map<AnimalType, List<Animal>> animalsByType;
     Island island = new Island(5, 3);
@@ -66,11 +66,30 @@ public class InitSimulation {
 
     }
 
+//    public void liveDay() {
+//        allAnimals.forEach(Animal::move);
+////        все травоядные едят траву
+//        Set<Animal> currentHerbivoresPopulation = getHerbivoresInSimulation();
+//
+////        currentHerbivoresPopulation.forEach(Herbivores.class.getDeclaredMethod("eat", Herbivores));
+//        island.getAllCells().forEach(IslandCell::growthRestorationOfPlantsInCell);
+
+
+//        growthRestorationOfPlantsInIsland(island);
+//        island.getAllCells().forEach(growthRestorationOfPlantsInCell());
+//        eat();
+//    controllState();
+
+//    }
+
     private void startDay() {
 //        ExecutorService executorService = Executors.newCachedThreadPool();
-// liveDay();
+            allAnimals.forEach(Animal::liveDay);
+            island.getAllCells().forEach(islandCell -> islandCell.growthRestorationOfPlantsInCell());
+        System.out.println("трава реснулась, можно идти и хавать снова" + island.getAllCells());
+//        allAnimals.forEach(Animal::liveDay);
 //        allAnimals.forEach(Animal::move); // 1
-//        island.getAllCells().forEach(IslandCell::growthRestorationOfPlantsInCell);
+
 
     }
 
@@ -119,7 +138,9 @@ public class InitSimulation {
                 .map(Map.Entry::getValue)
                 .flatMap(Set::stream)
                 .collect(Collectors.toSet());
-    }    private static Set<Animal> getPredatorsInSimulation() {
+    }
+
+    private static Set<Animal> getPredatorsInSimulation() {
         return animalsByType.entrySet().stream()
                 .filter(it -> AnimalType.getPredatorsTypes().contains(it.getKey()))
                 .map(Map.Entry::getValue)

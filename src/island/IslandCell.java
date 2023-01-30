@@ -23,14 +23,15 @@ public class IslandCell {
     }
 
     public boolean addOneAnimalInCell(Animal animal) {
-//        int currentPopulation = animalsByTypeInCell.computeIfAbsent(animalType, (k) -> new HashSet<>()).size();
+
+//        int currentPopulation = animalsByTypeInCell.computeIfAbsent(animalType, (k) -> new ArrayList<>()).size();
         Boolean herbivore = isHerbivore(animal);
         int currentPopulation = groupAnimalsByType.computeIfAbsent(herbivore, (k) -> new ArrayList<>()).size();
-//        int maxAmountInCell = 10;
-//        if (currentPopulation > maxAmountInCell) {
-//            System.out.printf("Animals in Cell %s is overpopulated with %s \n", this, animalType);
-//            return false;
-//        }
+        int maxAmountInCell = 10;
+        if (currentPopulation > maxAmountInCell) {
+            System.out.printf("Animals in Cell %s is overpopulated with %s \n", this, animal);
+            return false;
+        }
         return groupAnimalsByType.get(herbivore).add(animal);
     }
 
@@ -74,16 +75,16 @@ public class IslandCell {
     }
 
     public void growthRestorationOfPlantsInCell() {
-        int growFactor = 1;
+        int growFactor = 200;
         if (this.getQuantityPlantsInCell() == 1) {
             this.setQuantityPlantsInCell(growFactor * this.getQuantityPlantsInCell());
-            System.out.println("");
+            System.out.println("Cell x=" + x + ", y=" + y + ". Plants were growth in Cell again: " + getQuantityPlantsInCell());
         }
     }
 
     @Override
     public String toString() {
-        return "Cell x=" + x + ", y=" + y + ". " + "Plants in Cell " + quantityPlantsInCell + plantsEmoji + ", ";
+        return "Cell x=" + x + ", y=" + y + ". " + "Plants in Cell " + quantityPlantsInCell + plantsEmoji;
     }
 
 }

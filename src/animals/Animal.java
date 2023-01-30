@@ -23,6 +23,7 @@ public abstract class Animal implements Eatable { // Runnable
         this.island = island;
         this.animalCharacteristics = animalCharacteristics;
     }
+
     public abstract AnimalType getAnimalType();
 
     public AnimalCharacteristics getAnimalCharacteristics() {
@@ -33,13 +34,17 @@ public abstract class Animal implements Eatable { // Runnable
 //    public void run() {
 //        liveDay();
 //    }
-
+//
     public void liveDay() {
-       move();
-        eat();
-//    controllState();
 
+//      InitSimulation.allAnimals.forEach(Animal::move);
+        move();
+        eat();
+
+////    controllState();
+//
     }
+
     public void move() {
         System.out.println("Animals.Animal started moving. Current position - " + position);
         Random moveDecider = new Random();
@@ -111,6 +116,10 @@ public abstract class Animal implements Eatable { // Runnable
         this.position = newIslandCell;
         this.position.addOneAnimalInCell(this);
         System.out.println("Position changed...");
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public IslandCell getPosition() { // геттер x and y + List animals
