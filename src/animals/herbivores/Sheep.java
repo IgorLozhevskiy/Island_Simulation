@@ -3,7 +3,7 @@ import animals.AnimalCharacteristics;
 import animals.AnimalType;
 import island.Island;
 
-public class Sheep extends Herbivores{
+public class Sheep extends Herbivores {
 
     public Sheep(Island island, AnimalCharacteristics animalCharacteristics) {
         super(island, animalCharacteristics);

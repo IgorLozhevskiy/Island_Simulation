@@ -14,4 +14,5 @@ public class Mouse extends Herbivores {
     public AnimalType getAnimalType() {
         return AnimalType.MOUSE;
     }
+
 }

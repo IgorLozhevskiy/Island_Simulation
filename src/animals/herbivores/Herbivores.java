@@ -5,48 +5,52 @@ import animals.AnimalCharacteristics;
 import animals.AnimalType;
 import island.IslandCell;
 import island.Island;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public abstract class Herbivores extends Animal {
+    private boolean starving; // голодающий
     public Herbivores(Island island, AnimalCharacteristics animalCharacteristics) {
         super(island, animalCharacteristics);
+        this.starving = false;
     }
 
 
     @Override
     public void eat() {
+        System.out.printf("Herbivore %s, %s is looking for grass to eat!\n", getAnimalType(), getId()); // Травоядное ищет траву, чтобы поесть
         IslandCell position = this.getPosition(); // получаем текущую позицию ячейки
         int currentPlantsInCell = position.getQuantityPlantsInCell();
         System.out.println("Изначальное кол-во травы в клетке " + currentPlantsInCell);
         double amountOfFoodNeeded = getAnimalCharacteristics().getAmountOfFood(); // добавила СЕЙЧАС
         if (currentPlantsInCell >= amountOfFoodNeeded) {
 //        Map<AnimalType, Set<Animal>> currentAnimalsInCell = position.getAnimalsByTypeInCell();
-//            Map<AnimalType, List<Animal>> currentAnimalsInCell = position.getAnimalsByTypeInCell();
+//            Map<AnimalType, List<Animal>> currentAnimalsInCell = position.getAnimalsByTypeInCell(); // пока не понимаю,
+//            это Костя писал или нет?
             currentPlantsInCell = (int) (currentPlantsInCell - amountOfFoodNeeded);
             position.setQuantityPlantsInCell(currentPlantsInCell);
             System.out.printf("Животное %s, %s поело травы и теперь сытое\n", getAnimalType(), getId());
             System.out.println("Теперь в клетке кол-во травы " + currentPlantsInCell);
         } else {
-            currentPlantsInCell = new Random().nextInt(5); // т.е. животное съело абсолютно все и по идее, в этой клетке рост растений больше невозможен
+            System.out.printf("В клетке не хватает травы, чтобы насытиться. Животное %s, %s начинает голодать\n",
+                    getAnimalType(), getId());
+            starving = true;
+            currentPlantsInCell = new Random().nextInt(2); // тут рандомом выпадет 0 или 1. Если 0, то клетка непригодна
+            // для роста растений, если 1, то трава возродится в методе роста травы
             position.setQuantityPlantsInCell(currentPlantsInCell);
-            System.out.printf("Животное %s, %s начинает голодать\n", getAnimalType(), getId());
         }
     }
 
     @Override
     public void starvation() {
-        if (position.getQuantityPlantsInCell() == 0) {
-            List<Animal> herbivoresInCell = position.getGroupAnimalsByType().getOrDefault(true, Collections.emptyList());
-            herbivoresInCell.remove(AnimalType.getHerbivoresTypes());
-            System.out.println("All herbivores in Cell died, because is not plants in Cell");
+        IslandCell position = getPosition();
+        if (starving) {
+            position.removeAnimalInCell(this);
+            System.out.printf("The herbivore %s died of starvation!\n", getAnimalCharacteristics().getName());
         }
-
-
     }
 
+//    @Override
+//    public void breed() {
+//
+//    }
 }
-
