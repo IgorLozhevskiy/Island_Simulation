@@ -3,12 +3,12 @@ package animals;
 import island.Direction;
 import island.Island;
 import island.IslandCell;
-import Simulation.InitSimulation;
+import Simulation.Simulation;
 
 import java.util.Random;
 import java.util.UUID;
 
-public abstract class Animal implements Eatable { // Runnable
+public abstract class Animal implements Eatable,Dieable { // Runnable
     private static final int MOVE_DISTANCE = 3;
 
     private UUID id;
@@ -36,13 +36,10 @@ public abstract class Animal implements Eatable { // Runnable
 //    }
 //
     public void liveDay() {
-
-//      InitSimulation.allAnimals.forEach(Animal::move);
         move();
         eat();
-
+        starvation();
 ////    controllState();
-//
     }
 
     public void move() {
@@ -69,7 +66,7 @@ public abstract class Animal implements Eatable { // Runnable
             direction = directions[directionPicker.nextInt(directions.length)];
         } while (!directionValid(direction));
         changePosition(direction);
-        InitSimulation.movesCount.incrementAndGet();
+        Simulation.movesCount.incrementAndGet();
     }
 
     private boolean directionValid(Direction direction) {
@@ -122,11 +119,11 @@ public abstract class Animal implements Eatable { // Runnable
         return id;
     }
 
-    public IslandCell getPosition() { // геттер x and y + List animals
+    public IslandCell getPosition() {
         return position;
     }
 
-    public void setPosition(IslandCell position) { // сеттер
+    public void setPosition(IslandCell position) {
         this.position = position;
     }
 
@@ -150,4 +147,5 @@ public abstract class Animal implements Eatable { // Runnable
     public String toString() {
         return this.animalCharacteristics.getName().toString();
     }
+
 }

@@ -6,18 +6,14 @@ import animals.AnimalCharacteristics;
 import animals.AnimalType;
 import animals.AnimalsFactory;
 
-import animals.herbivores.Herbivores;
-import animals.predators.Wolf;
 import island.Island;
 import island.IslandCell;
 
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-public class InitSimulation {
+public class Simulation {
 
 
     private static AnimalCharacteristics animalCharacteristics;
@@ -66,29 +62,11 @@ public class InitSimulation {
 
     }
 
-//    public void liveDay() {
-//        allAnimals.forEach(Animal::move);
-////        все травоядные едят траву
-//        Set<Animal> currentHerbivoresPopulation = getHerbivoresInSimulation();
-//
-////        currentHerbivoresPopulation.forEach(Herbivores.class.getDeclaredMethod("eat", Herbivores));
-//        island.getAllCells().forEach(IslandCell::growthRestorationOfPlantsInCell);
-
-
-//        growthRestorationOfPlantsInIsland(island);
-//        island.getAllCells().forEach(growthRestorationOfPlantsInCell());
-//        eat();
-//    controllState();
-
-//    }
 
     private void startDay() {
 //        ExecutorService executorService = Executors.newCachedThreadPool();
             allAnimals.forEach(Animal::liveDay);
             island.getAllCells().forEach(islandCell -> islandCell.growthRestorationOfPlantsInCell());
-        System.out.println("трава реснулась, можно идти и хавать снова" + island.getAllCells());
-//        allAnimals.forEach(Animal::liveDay);
-//        allAnimals.forEach(Animal::move); // 1
 
 
     }

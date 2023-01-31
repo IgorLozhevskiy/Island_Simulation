@@ -1,8 +1,8 @@
-import Simulation.InitSimulation;
+import Simulation.Simulation;
 
 public class AppRunner {
     public static void main(String[] args) {
-        InitSimulation initSimulation = new InitSimulation();
-        initSimulation.runSimulation();
+        Simulation simulation = new Simulation();
+        simulation.runSimulation();
     }
 }

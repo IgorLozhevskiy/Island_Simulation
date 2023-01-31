@@ -2,12 +2,12 @@ package animals.predators;
 
 import animals.Animal;
 import animals.AnimalCharacteristics;
-import animals.AnimalType;
-import animals.herbivores.Herbivores;
+
 import config.AnimalsConfig;
 import island.Island;
 import island.IslandCell;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -16,44 +16,32 @@ public abstract class Predators extends Animal {
         super(island, animalCharacteristics);
     }
 
-    //    @Override
-//    public void eat() {
-//        double amountOfFoodNeeded = getAnimalCharacteristics().getAmountOfFood();
-//        IslandCell position = getPosition();
-//        List<Animal> herbivoresInCell = position.getGroupAnimalsByType().get(true);
-//        if (herbivoresInCell.size() <= 1) {
-//            return;
-//        }
-//        Animal prey = herbivoresInCell.get(new Random().nextInt(herbivoresInCell.size()));
-//        int probabilityOfEating = AnimalsConfig.getInstance().getProbabilityOfEating(this, prey);
-//        if (new Random().nextInt(100) <= probabilityOfEating) {
-//            // prey is eaten by predator
-//            position.removeAnimalInCell(this);
-//        } else {
-//            //prey successfully ran away
-//            System.out.println("Herbivore successfully ran away");
-//        }
-//    }
     @Override
     public void eat() {
         System.out.printf("Animal %s, %s started eat!", getAnimalType(), getId());
         double amountOfFoodNeeded = getAnimalCharacteristics().getAmountOfFood();
         IslandCell position = getPosition();
-        List<Animal> herbivoresInCell = position.getGroupAnimalsByType().get(true);
-        if (herbivoresInCell.size() <= 1) {
-            System.out.println("ВОТ ТУТ ДЕЛАЕМ RETURN");
+        List<Animal> herbivoresInCell = position.getGroupAnimalsByType().getOrDefault(true, Collections.emptyList());
+        if (herbivoresInCell.isEmpty()) {
+            System.out.println("There wasn't a single herbivore left in the Cell");
             return;
         }
-        System.out.println("ЗНАЧИТ ПРОСКОЧИЛИ RETURN");
-        Animal prey = herbivoresInCell.get(new Random().nextInt(herbivoresInCell.size() - 1));
+        Animal prey = herbivoresInCell.get(new Random().nextInt(herbivoresInCell.size()));
         int probabilityOfEating = AnimalsConfig.getInstance().getProbabilityOfEating(this, prey);
         if (new Random().nextInt(100) <= probabilityOfEating) {
             // prey is eaten by predator
-            position.removeAnimalInCell(this);
+            System.out.println("До того как съели состояние коллекции:" + herbivoresInCell.toString());
+            position.removeAnimalInCell(prey);
+            System.out.println("После того как съели состояние коллекции:" + herbivoresInCell.toString());
         } else {
             //prey successfully ran away
             System.out.println("Herbivore successfully ran away");
         }
+    }
+
+    @Override
+    public void starvation() {
+        System.out.println("TODO");
     }
 }
 
