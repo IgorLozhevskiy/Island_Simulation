@@ -17,7 +17,7 @@ public abstract class Herbivores extends Animal {
 
     @Override
     public void eat() {
-        System.out.printf("Herbivore %s, %s is looking for grass to eat!\n", getAnimalType(), getId()); // Травоядное ищет траву, чтобы поесть
+        System.out.printf("Herbivore %s is looking for grass to eat!\n", getAnimalCharacteristics().getName()); // Травоядное ищет траву, чтобы поесть
         IslandCell position = this.getPosition(); // получаем текущую позицию ячейки
         int currentPlantsInCell = position.getQuantityPlantsInCell();
         System.out.println("Изначальное кол-во травы в клетке " + currentPlantsInCell);
@@ -28,11 +28,11 @@ public abstract class Herbivores extends Animal {
 //            это Костя писал или нет?
             currentPlantsInCell = (int) (currentPlantsInCell - amountOfFoodNeeded);
             position.setQuantityPlantsInCell(currentPlantsInCell);
-            System.out.printf("Животное %s, %s поело травы и теперь сытое\n", getAnimalType(), getId());
+            System.out.printf("Животное %s поело травы и теперь сытое\n", getAnimalCharacteristics().getName());
             System.out.println("Теперь в клетке кол-во травы " + currentPlantsInCell);
         } else {
-            System.out.printf("В клетке не хватает травы, чтобы насытиться. Животное %s, %s начинает голодать\n",
-                    getAnimalType(), getId());
+            System.out.printf("В клетке не хватает травы, чтобы насытиться. Животное %s начинает голодать\n",
+                    getAnimalCharacteristics().getName());
             starving = true;
             currentPlantsInCell = new Random().nextInt(2); // тут рандомом выпадет 0 или 1. Если 0, то клетка непригодна
             // для роста растений, если 1, то трава возродится в методе роста травы

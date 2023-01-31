@@ -61,7 +61,7 @@ public abstract class Predators extends Animal {
         IslandCell position = getPosition();
         if (starving) {
             position.removeAnimalInCell(this);
-            System.out.printf("The predator %s, %s died of starvation! \n", getAnimalType(), getId());
+            System.out.printf("The predator %s died of starvation! \n", getAnimalCharacteristics().getName());
         }
     }
 
