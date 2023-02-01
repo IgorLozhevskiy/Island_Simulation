@@ -25,11 +25,6 @@ public class IslandCell {
     public boolean addOneAnimalInCell(Animal animal) {
         Boolean herbivore = isHerbivore(animal);
         int currentPopulation = groupAnimalsByType.computeIfAbsent(herbivore, (k) -> new ArrayList<>()).size();
-        int maxAmountInCell = 10;
-        if (currentPopulation > maxAmountInCell) {
-            System.out.printf("Animals in Cell %s is overpopulated with %s \n", this, animal);
-            return false;
-        }
         return groupAnimalsByType.get(herbivore).add(animal);
     }
 
@@ -72,8 +67,10 @@ public class IslandCell {
     public void growthRestorationOfPlantsInCell() {
         Random randomGrowthFactor = new Random();
         if (this.getQuantityPlantsInCell() == 1) {
-            this.setQuantityPlantsInCell(randomGrowthFactor.nextInt(AnimalsConfig.GROW_FACTOR) * this.getQuantityPlantsInCell());
-            System.out.println("Cell x=" + x + ", y=" + y + ". Plants were growth in Cell again: " + getQuantityPlantsInCell());
+            this.setQuantityPlantsInCell(randomGrowthFactor.nextInt(AnimalsConfig.GROW_FACTOR) *
+                    this.getQuantityPlantsInCell());
+            System.out.println("Cell x=" + x + ", y=" + y + ". Plants were growth in Cell again: " +
+                    getQuantityPlantsInCell());
         }
     }
 

@@ -15,6 +15,4 @@ public class Duck extends Herbivores {
     public AnimalType getAnimalType() {
         return AnimalType.DUCK;
     }
-
-
 }

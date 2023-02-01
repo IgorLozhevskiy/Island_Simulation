@@ -1,7 +1,7 @@
 package animals.herbivores;
+
 import animals.AnimalCharacteristics;
 import animals.AnimalType;
-import animals.predators.Predators;
 import island.Island;
 
 public class WildBoar extends Herbivores {
@@ -12,6 +12,4 @@ public class WildBoar extends Herbivores {
     public AnimalType getAnimalType() {
         return AnimalType.WILD_BOAR;
     }
-
-
 }

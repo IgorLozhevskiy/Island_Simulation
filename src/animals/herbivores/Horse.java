@@ -10,11 +10,8 @@ public class Horse extends Herbivores {
         super(island, animalCharacteristics);
     }
 
-
     @Override
     public AnimalType getAnimalType() {
         return AnimalType.HORSE;
     }
-
-
 }

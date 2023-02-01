@@ -9,7 +9,8 @@ public class AnimalCharacteristics {
     private final int maxSpeed;
     private final double amountOfFood;
 
-    public AnimalCharacteristics(String name, String emoji, double maxWeight, int maxNumAnimalsInCell, int maxSpeed, double amountOfFood) {
+    public AnimalCharacteristics(String name, String emoji, double maxWeight, int maxNumAnimalsInCell,
+                                 int maxSpeed, double amountOfFood) {
         this.name = name;
         this.emoji = emoji;
         this.maxWeight = maxWeight;

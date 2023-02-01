@@ -10,11 +10,8 @@ public class Sheep extends Herbivores {
         super(island, animalCharacteristics);
     }
 
-
     @Override
     public AnimalType getAnimalType() {
         return AnimalType.SHEEP;
     }
-
-
 }

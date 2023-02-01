@@ -15,6 +15,4 @@ public class Goat extends Herbivores {
     public AnimalType getAnimalType() {
         return AnimalType.GOAT;
     }
-
-
 }

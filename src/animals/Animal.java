@@ -3,18 +3,15 @@ package animals;
 import island.Direction;
 import island.Island;
 import island.IslandCell;
-import Simulation.Simulation;
 
 import java.util.Random;
 import java.util.UUID;
 
+import static simulation.Simulation.movesCount;
+
 public abstract class Animal implements Eatable, Dieable, ControlOfCondition {
-    private static final int MOVE_DISTANCE = 3;
-
     private UUID id;
-
     private final Island island;
-
     private AnimalCharacteristics animalCharacteristics;
     public IslandCell position;
 
@@ -38,19 +35,14 @@ public abstract class Animal implements Eatable, Dieable, ControlOfCondition {
     }
 
     public void move() {
-//        System.out.println("Animal started moving. Current position - " + position);
         Random moveDecider = new Random();
-        for (int i = 0; i < MOVE_DISTANCE; i++) {
+        for (int i = 0; i < animalCharacteristics.getMaxSpeed(); i++) {
             boolean moveDecision = moveDecider.nextBoolean();
             if (moveDecision) {
-//                System.out.println("Animal will move...");
                 moveToOtherCell();
-//            } else {
-//                System.out.println("Animal decided to stay for here now...");
             }
         }
-//        System.out.println("Animal finished his moving turn!");
-//        System.out.println("Current position - " + position);
+        System.out.println("Animal finished his moving turn! Current position - " + position);
     }
 
     private void moveToOtherCell() {
@@ -61,11 +53,10 @@ public abstract class Animal implements Eatable, Dieable, ControlOfCondition {
             direction = directions[directionPicker.nextInt(directions.length)];
         } while (!directionValid(direction));
         changePosition(direction);
-        Simulation.movesCount.incrementAndGet();
+        movesCount.incrementAndGet();
     }
 
     private boolean directionValid(Direction direction) {
-//        System.out.println("Picking direction...");
         switch (direction) {
             case UP: // по y
                 return position.getY() - 1 > 0;
@@ -81,7 +72,6 @@ public abstract class Animal implements Eatable, Dieable, ControlOfCondition {
     }
 
     private void changePosition(Direction direction) {
-//        System.out.println("Animal changes position...");
         int newX = -1;
         int newY = -1;
         switch (direction) {
@@ -106,7 +96,6 @@ public abstract class Animal implements Eatable, Dieable, ControlOfCondition {
         this.position.removeAnimalInCell(this);
         this.position = newIslandCell;
         this.position.addOneAnimalInCell(this);
-//        System.out.println("Position changed...");
     }
 
     public UUID getId() {
@@ -140,5 +129,4 @@ public abstract class Animal implements Eatable, Dieable, ControlOfCondition {
     public String toString() {
         return this.animalCharacteristics.getEmoji();
     }
-
 }

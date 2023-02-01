@@ -3,7 +3,6 @@ package animals;
 import java.util.List;
 
 public enum AnimalType {
-
     HORSE,
     DEER,
     RABBIT,
@@ -28,5 +27,4 @@ public enum AnimalType {
     public static List<AnimalType> getPredatorsTypes() {
         return List.of(WOLF, SNAKE, BEAR, EAGLE);
     }
-
 }

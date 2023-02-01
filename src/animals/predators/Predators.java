@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Random;
 
 public abstract class Predators extends Animal {
-
     private boolean starving;
 
     public Predators(Island island, AnimalCharacteristics animalCharacteristics) {
@@ -21,10 +20,12 @@ public abstract class Predators extends Animal {
 
     @Override
     public void eat() {
-        System.out.printf("The predator %s %s starts hunting for food!\n", getAnimalCharacteristics().getName(), getAnimalCharacteristics().getEmoji());
+        System.out.printf("The predator %s %s starts hunting for food!\n", getAnimalCharacteristics().getName(),
+                getAnimalCharacteristics().getEmoji());
         double amountOfFoodNeeded = getAnimalCharacteristics().getAmountOfFood();
         IslandCell position = getPosition();
-        List<Animal> herbivoresInCell = position.getGroupAnimalsByType().getOrDefault(true, Collections.emptyList());
+        List<Animal> herbivoresInCell = position.getGroupAnimalsByType().getOrDefault(true,
+                Collections.emptyList());
         if (herbivoresInCell.isEmpty()) {
             System.out.println("There wasn't a single herbivore left in the Cell");
             starving = true;
@@ -36,9 +37,7 @@ public abstract class Predators extends Animal {
         int randomProbabilityOfEating = new Random().nextInt(100);
         if (randomProbabilityOfEating <= probabilityOfEating) {
             if (amountOfFoodNeeded <= amountOfFoodInPrey) {
-
                 position.removeAnimalInCell(prey);
-
             } else {
                 System.out.println("The weight of the Herbivore is so small, that the Predator doesn't enough food");
                 starving = true;
@@ -62,8 +61,8 @@ public abstract class Predators extends Animal {
     @Override
     public void controlOfCondition() {
         IslandCell position = getPosition();
-        List<Animal> predatorsInCell = position.getGroupAnimalsByType().getOrDefault(true, Collections.emptyList());
+        List<Animal> predatorsInCell = position.getGroupAnimalsByType().getOrDefault(false,
+                Collections.emptyList());
         System.out.printf("Total Predators in Cell = %d \n", predatorsInCell.size());
     }
-
 }
