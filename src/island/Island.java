@@ -1,10 +1,13 @@
-package Island;
+package island;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Island {
     public int xDimension;
     public int yDimension;
     public IslandCell[][] islandGrid;
-
 
     public Island(int xDimension, int yDimension) {
         this.xDimension = xDimension;
@@ -26,8 +29,14 @@ public class Island {
         return totalPlantsInIsland;
     }
 
+    public List<IslandCell> getAllCells() {
+        return Stream.of(islandGrid).flatMap(Stream::of).collect(Collectors.toList());
+    }
+
+
+
     @Override
     public String toString() {
-        return String.format("Total plants in Island.Island: %s \n", getPlantsLevel());
+        return String.format("%s\n", getPlantsLevel());
     }
 }
