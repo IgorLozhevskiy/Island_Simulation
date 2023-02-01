@@ -4,7 +4,7 @@ import animals.AnimalType;
 import animals.predators.Predators;
 import island.Island;
 
-public class WildBoar extends Predators {
+public class WildBoar extends Herbivores {
     public WildBoar(Island island, AnimalCharacteristics animalCharacteristics) {
         super(island, animalCharacteristics);
     }
