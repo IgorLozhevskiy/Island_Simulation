@@ -2,29 +2,27 @@ package island;
 
 import animals.Animal;
 import animals.AnimalType;
+import config.AnimalsConfig;
 
 import java.util.*;
 
 public class IslandCell {
-    private String plantsEmoji = "\uD83C\uDF40";
     int x;
     int y;
     private int quantityPlantsInCell;
-    //    Map<AnimalType, Set<Animal>> animalsByTypeInCell;
     private Map<AnimalType, List<Animal>> animalsByTypeInCell;
-    private Map<Boolean, List<Animal>> groupAnimalsByType = new HashMap<>();
+    private Map<Boolean, List<Animal>> groupAnimalsByType;
     private Plants plant;
 
     public IslandCell(int x, int y) {
         this.x = x;
         this.y = y;
         this.animalsByTypeInCell = new HashMap<>();
+        this.groupAnimalsByType = new HashMap<>();
         this.plant = new Plants(quantityPlantsInCell);
     }
 
     public boolean addOneAnimalInCell(Animal animal) {
-
-//        int currentPopulation = animalsByTypeInCell.computeIfAbsent(animalType, (k) -> new ArrayList<>()).size();
         Boolean herbivore = isHerbivore(animal);
         int currentPopulation = groupAnimalsByType.computeIfAbsent(herbivore, (k) -> new ArrayList<>()).size();
         int maxAmountInCell = 10;
@@ -55,9 +53,6 @@ public class IslandCell {
         return y;
     }
 
-    //    public Map<AnimalType, Set<Animal>> getAnimalsByTypeInCell() {
-//        return animalsByTypeInCell;
-//    }
     public Map<AnimalType, List<Animal>> getAnimalsByTypeInCell() {
         return animalsByTypeInCell;
     }
@@ -75,16 +70,16 @@ public class IslandCell {
     }
 
     public void growthRestorationOfPlantsInCell() {
-        int growFactor = 200;
+        Random randomGrowthFactor = new Random();
         if (this.getQuantityPlantsInCell() == 1) {
-            this.setQuantityPlantsInCell(growFactor * this.getQuantityPlantsInCell());
+            this.setQuantityPlantsInCell(randomGrowthFactor.nextInt(AnimalsConfig.GROW_FACTOR) * this.getQuantityPlantsInCell());
             System.out.println("Cell x=" + x + ", y=" + y + ". Plants were growth in Cell again: " + getQuantityPlantsInCell());
         }
     }
 
     @Override
     public String toString() {
-        return "Cell x=" + x + ", y=" + y + ". " + "Plants in Cell " + quantityPlantsInCell + plantsEmoji;
+        return "Cell x=" + x + ", y=" + y + ". " + "Plants in Cell " + quantityPlantsInCell + AnimalsConfig.plantsEmoji;
     }
 
 }

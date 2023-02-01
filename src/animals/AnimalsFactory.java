@@ -1,8 +1,9 @@
 package animals;
+
 import animals.herbivores.*;
 import animals.herbivores.WildBoar;
 import animals.predators.*;
-import animals.predators.Mouse;
+
 import island.Island;
 import config.AnimalsConfig;
 
@@ -34,10 +35,13 @@ public class AnimalsFactory {
                     case MOUSE -> new Mouse(island, AnimalsConfig.getInstance().getMap().get(AnimalType.MOUSE));
                     case GOAT -> new Goat(island, AnimalsConfig.getInstance().getMap().get(AnimalType.GOAT));
                     case SHEEP -> new Sheep(island, AnimalsConfig.getInstance().getMap().get(AnimalType.SHEEP));
-                    case WILD_BOAR -> new WildBoar(island, AnimalsConfig.getInstance().getMap().get(AnimalType.WILD_BOAR));
+                    case WILD_BOAR ->
+                            new WildBoar(island, AnimalsConfig.getInstance().getMap().get(AnimalType.WILD_BOAR));
                     case BUFFALO -> new Buffalo(island, AnimalsConfig.getInstance().getMap().get(AnimalType.BUFFALO));
                     case DUCK -> new Duck(island, AnimalsConfig.getInstance().getMap().get(AnimalType.DUCK));
                 };
         return animal;
     }
+
+
 }

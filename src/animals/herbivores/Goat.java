@@ -1,4 +1,5 @@
 package animals.herbivores;
+
 import animals.AnimalCharacteristics;
 import animals.AnimalType;
 import island.Island;

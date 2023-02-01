@@ -2,13 +2,16 @@ package animals.herbivores;
 
 import animals.Animal;
 import animals.AnimalCharacteristics;
-import animals.AnimalType;
 import island.IslandCell;
 import island.Island;
+
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public abstract class Herbivores extends Animal {
-    private boolean starving; // голодающий
+    private boolean starving;
+
     public Herbivores(Island island, AnimalCharacteristics animalCharacteristics) {
         super(island, animalCharacteristics);
         this.starving = false;
@@ -17,25 +20,22 @@ public abstract class Herbivores extends Animal {
 
     @Override
     public void eat() {
-        System.out.printf("Herbivore %s is looking for grass to eat!\n", getAnimalCharacteristics().getName()); // Травоядное ищет траву, чтобы поесть
-        IslandCell position = this.getPosition(); // получаем текущую позицию ячейки
+        System.out.printf("Herbivore %s %s is looking for grass to eat!\n", getAnimalCharacteristics().getName(), getAnimalCharacteristics().getEmoji());
+        IslandCell position = this.getPosition();
         int currentPlantsInCell = position.getQuantityPlantsInCell();
-        System.out.println("Изначальное кол-во травы в клетке " + currentPlantsInCell);
-        double amountOfFoodNeeded = getAnimalCharacteristics().getAmountOfFood(); // добавила СЕЙЧАС
+
+        double amountOfFoodNeeded = getAnimalCharacteristics().getAmountOfFood();
         if (currentPlantsInCell >= amountOfFoodNeeded) {
-//        Map<AnimalType, Set<Animal>> currentAnimalsInCell = position.getAnimalsByTypeInCell();
-//            Map<AnimalType, List<Animal>> currentAnimalsInCell = position.getAnimalsByTypeInCell(); // пока не понимаю,
-//            это Костя писал или нет?
+
             currentPlantsInCell = (int) (currentPlantsInCell - amountOfFoodNeeded);
             position.setQuantityPlantsInCell(currentPlantsInCell);
-            System.out.printf("Животное %s поело травы и теперь сытое\n", getAnimalCharacteristics().getName());
-            System.out.println("Теперь в клетке кол-во травы " + currentPlantsInCell);
+            System.out.printf("The Herbivore has eaten %s %s \n", getAnimalCharacteristics().getName(), getAnimalCharacteristics().getEmoji());
+            System.out.println("After this the Plants in Cell remained " + currentPlantsInCell);
         } else {
-            System.out.printf("В клетке не хватает травы, чтобы насытиться. Животное %s начинает голодать\n",
-                    getAnimalCharacteristics().getName());
+            System.out.printf("In this Cell not enough the Plants and The Herbivore %s %s starting to starvation\n",
+                    getAnimalCharacteristics().getName(), getAnimalCharacteristics().getEmoji());
             starving = true;
-            currentPlantsInCell = new Random().nextInt(2); // тут рандомом выпадет 0 или 1. Если 0, то клетка непригодна
-            // для роста растений, если 1, то трава возродится в методе роста травы
+            currentPlantsInCell = new Random().nextInt(2);
             position.setQuantityPlantsInCell(currentPlantsInCell);
         }
     }
@@ -45,12 +45,16 @@ public abstract class Herbivores extends Animal {
         IslandCell position = getPosition();
         if (starving) {
             position.removeAnimalInCell(this);
-            System.out.printf("The herbivore %s died of starvation!\n", getAnimalCharacteristics().getName());
+            System.out.printf("The herbivore %s %s died of starvation!\n",
+                    getAnimalCharacteristics().getName(), getAnimalCharacteristics().getEmoji());
         }
     }
 
-//    @Override
-//    public void breed() {
-//
-//    }
+    @Override
+    public void controlOfCondition() {
+        IslandCell position = getPosition();
+        List<Animal> herbivoresInCell = position.getGroupAnimalsByType().getOrDefault(true, Collections.emptyList());
+        System.out.printf("Total Herbivores in Cell = %d \n", herbivoresInCell.size());
+    }
+
 }

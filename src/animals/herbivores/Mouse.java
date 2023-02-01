@@ -1,8 +1,7 @@
-package animals.predators;
+package animals.herbivores;
 
 import animals.AnimalCharacteristics;
 import animals.AnimalType;
-import animals.herbivores.Herbivores;
 import island.Island;
 
 public class Mouse extends Herbivores {
